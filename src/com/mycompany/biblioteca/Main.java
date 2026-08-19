@@ -35,5 +35,20 @@ public class Main {
             System.out.println(c);
         }
     }
+
+        static Cliente findClienteById(String id) {
+        for (Cliente c : clientes) {
+            if (c.getId().equalsIgnoreCase(id)) {
+                return c;
+            }
+        }
+        return null;
+    }
+
+    static void searchCliente() {
+        String id = readText("Client id to search: ");
+        Cliente c = findClienteById(id);
+        System.out.println(c != null ? c : "Client not found.");
+    }
 }
 
