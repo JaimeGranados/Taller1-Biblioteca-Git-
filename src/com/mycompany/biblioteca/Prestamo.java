@@ -74,4 +74,17 @@ public class Prestamo {
         p.getLibro().setDisponible(true);
         System.out.println("Return registered successfully.");
     }
+
+        static void listActivePrestamos() {
+        boolean found = false;
+        for (Prestamo p : prestamos) {
+            if (p.getEstado().equals("ACTIVO")) {
+                System.out.println(p);
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println("No active loans.");
+        }
+    }
 }
