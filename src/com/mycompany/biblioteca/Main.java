@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class Main {
 
     static ArrayList<Cliente> clientes = new ArrayList<>();
+    static ArrayList<Libro> libros = new ArrayList<>();
     static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -73,6 +74,64 @@ public class Main {
         }
         clientes.remove(c);
         System.out.println("Client deleted.");
+    }
+
+        static void createLibro() {
+        String codigo = readText("Book code: ");
+        String titulo = readText("Title: ");
+        String anio = readText("Publication year: ");
+        String autor = readText("Author: ");
+        libros.add(new Libro(codigo, titulo, anio, autor));
+        System.out.println("Book created successfully.");
+    }
+
+        static void listLibro() {
+        if (libros.isEmpty()) {
+            System.out.println("No books registered.");
+            return;
+        }
+        for (Libro l : libros) {
+            System.out.println(l);
+        }
+    }
+
+        static Libro findLibroByCodigo(String codigo) {
+        for (Libro l : libros) {
+            if (l.getCodigo().equalsIgnoreCase(codigo)) {
+                return l;
+            }
+        }
+        return null;
+    }
+
+    static void searchLibro() {
+        String codigo = readText("Book code to search: ");
+        Libro l = findLibroByCodigo(codigo);
+        System.out.println(l != null ? l : "Book not found.");
+    }
+
+        static void updateLibro() {
+        String codigo = readText("Book code to update: ");
+        Libro l = findLibroByCodigo(codigo);
+        if (l == null) {
+            System.out.println("Book not found.");
+            return;
+        }
+        l.setTitulo(readText("New title: "));
+        l.setAnioPublicacion(readText("New publication year: "));
+        l.setAutor(readText("New author: "));
+        System.out.println("Book updated.");
+    }
+
+        static void deleteLibro() {
+        String codigo = readText("Book code to delete: ");
+        Libro l = findLibroByCodigo(codigo);
+        if (l == null) {
+            System.out.println("Book not found.");
+            return;
+        }
+        libros.remove(l);
+        System.out.println("Book deleted.");
     }
 }
 
