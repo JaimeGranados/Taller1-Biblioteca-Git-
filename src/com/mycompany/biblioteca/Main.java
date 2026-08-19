@@ -158,5 +158,43 @@ public class Main {
         l.setDisponible(false);
         System.out.println("Loan registered successfully.");
     }
+    
+     static Prestamo findPrestamoById(String id) {
+        for (Prestamo p : prestamos) {
+            if (p.getIdPrestamo().equalsIgnoreCase(id)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    static void returnPrestamo() {
+        String id = readText("Loan id to return: ");
+        Prestamo p = findPrestamoById(id);
+        if (p == null) {
+            System.out.println("Loan not found.");
+            return;
+        }
+        if (p.getEstado().equals("DEVUELTO")) {
+            System.out.println("This loan was already returned.");
+            return;
+        }
+        p.setEstado("DEVUELTO");
+        p.getLibro().setDisponible(true);
+        System.out.println("Return registered successfully.");
+    }
+
+        static void listActivePrestamos() {
+        boolean found = false;
+        for (Prestamo p : prestamos) {
+            if (p.getEstado().equals("ACTIVO")) {
+                System.out.println(p);
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println("No active loans.");
+        }
+    }
 }
 
