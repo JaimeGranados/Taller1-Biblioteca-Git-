@@ -109,5 +109,18 @@ public class Main {
         Libro l = findLibroByCodigo(codigo);
         System.out.println(l != null ? l : "Book not found.");
     }
+
+        static void updateLibro() {
+        String codigo = readText("Book code to update: ");
+        Libro l = findLibroByCodigo(codigo);
+        if (l == null) {
+            System.out.println("Book not found.");
+            return;
+        }
+        l.setTitulo(readText("New title: "));
+        l.setAnioPublicacion(readText("New publication year: "));
+        l.setAutor(readText("New author: "));
+        System.out.println("Book updated.");
+    }
 }
 
