@@ -6,13 +6,69 @@ import java.util.Scanner;
 public class Main {
 
     static ArrayList<Cliente> clientes = new ArrayList<>();
+    static ArrayList<Libro> libros = new ArrayList<>();
+    static ArrayList<Prestamo> prestamos = new ArrayList<>();
     static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
-        // Menu will go here (Fase 8)
+        int option;
+        do {
+            showMenu();
+            option = readInt("Choose an option: ");
+            switch (option) {
+                case 1 -> createCliente();
+                case 2 -> listCliente();
+                case 3 -> searchCliente();
+                case 4 -> updateCliente();
+                case 5 -> deleteCliente();
+                case 6 -> createLibro();
+                case 7 -> listLibro();
+                case 8 -> searchLibro();
+                case 9 -> updateLibro();
+                case 10 -> deleteLibro();
+                case 11 -> createPrestamo();
+                case 12 -> returnPrestamo();
+                case 13 -> listActivePrestamos();
+                case 0 -> System.out.println("Exiting system...");
+                default -> System.out.println("Invalid option.");
+            }
+        } while (option != 0);
+        sc.close();
     }
 
-        static String readText(String message) {
+    static void showMenu() {
+        System.out.println("\n===== LIBRARY MANAGEMENT SYSTEM =====");
+        System.out.println("--- Clients ---");
+        System.out.println("1. Create client");
+        System.out.println("2. List clients");
+        System.out.println("3. Search client by id");
+        System.out.println("4. Update client");
+        System.out.println("5. Delete client");
+        System.out.println("--- Books ---");
+        System.out.println("6. Create book");
+        System.out.println("7. List books");
+        System.out.println("8. Search book by code");
+        System.out.println("9. Update book");
+        System.out.println("10. Delete book");
+        System.out.println("--- Loans ---");
+        System.out.println("11. Register loan");
+        System.out.println("12. Register return");
+        System.out.println("13. List active loans");
+        System.out.println("0. Exit");
+    }
+
+    static int readInt(String message) {
+        System.out.print(message);
+        while (!sc.hasNextInt()) {
+            System.out.print("Enter a valid number: ");
+            sc.next();
+        }
+        int value = sc.nextInt();
+        sc.nextLine();
+        return value;
+    }
+
+    static String readText(String message) {
         System.out.print(message);
         return sc.nextLine();
     }
@@ -26,7 +82,7 @@ public class Main {
         System.out.println("Client created successfully.");
     }
 
-        static void listCliente() {
+    static void listCliente() {
         if (clientes.isEmpty()) {
             System.out.println("No clients registered.");
             return;
@@ -36,7 +92,7 @@ public class Main {
         }
     }
 
-        static Cliente findClienteById(String id) {
+    static Cliente findClienteById(String id) {
         for (Cliente c : clientes) {
             if (c.getId().equalsIgnoreCase(id)) {
                 return c;
@@ -51,7 +107,7 @@ public class Main {
         System.out.println(c != null ? c : "Client not found.");
     }
 
-        static void updateCliente() {
+    static void updateCliente() {
         String id = readText("Client id to update: ");
         Cliente c = findClienteById(id);
         if (c == null) {
@@ -64,7 +120,7 @@ public class Main {
         System.out.println("Client updated.");
     }
 
-        static void deleteCliente() {
+    static void deleteCliente() {
         String id = readText("Client id to delete: ");
         Cliente c = findClienteById(id);
         if (c == null) {
@@ -74,5 +130,124 @@ public class Main {
         clientes.remove(c);
         System.out.println("Client deleted.");
     }
-}
 
+    static void createLibro() {
+        String codigo = readText("Book code: ");
+        String titulo = readText("Title: ");
+        String anio = readText("Publication year: ");
+        String autor = readText("Author: ");
+        libros.add(new Libro(codigo, titulo, anio, autor));
+        System.out.println("Book created successfully.");
+    }
+
+    static void listLibro() {
+        if (libros.isEmpty()) {
+            System.out.println("No books registered.");
+            return;
+        }
+        for (Libro l : libros) {
+            System.out.println(l);
+        }
+    }
+
+    static Libro findLibroByCodigo(String codigo) {
+        for (Libro l : libros) {
+            if (l.getCodigo().equalsIgnoreCase(codigo)) {
+                return l;
+            }
+        }
+        return null;
+    }
+
+    static void searchLibro() {
+        String codigo = readText("Book code to search: ");
+        Libro l = findLibroByCodigo(codigo);
+        System.out.println(l != null ? l : "Book not found.");
+    }
+
+    static void updateLibro() {
+        String codigo = readText("Book code to update: ");
+        Libro l = findLibroByCodigo(codigo);
+        if (l == null) {
+            System.out.println("Book not found.");
+            return;
+        }
+        l.setTitulo(readText("New title: "));
+        l.setAnioPublicacion(readText("New publication year: "));
+        l.setAutor(readText("New author: "));
+        System.out.println("Book updated.");
+    }
+
+    static void deleteLibro() {
+        String codigo = readText("Book code to delete: ");
+        Libro l = findLibroByCodigo(codigo);
+        if (l == null) {
+            System.out.println("Book not found.");
+            return;
+        }
+        libros.remove(l);
+        System.out.println("Book deleted.");
+    }
+
+    static void createPrestamo() {
+        String idCliente = readText("Client id: ");
+        Cliente c = findClienteById(idCliente);
+        if (c == null) {
+            System.out.println("Client not found.");
+            return;
+        }
+        String codigoLibro = readText("Book code: ");
+        Libro l = findLibroByCodigo(codigoLibro);
+        if (l == null) {
+            System.out.println("Book not found.");
+            return;
+        }
+        if (!l.isDisponible()) {
+            System.out.println("Book is not available.");
+            return;
+        }
+        String idPrestamo = readText("Loan id: ");
+        Prestamo p = new Prestamo(idPrestamo, c, l);
+        prestamos.add(p);
+        l.setDisponible(false);
+        System.out.println("Loan registered successfully.");
+    }
+
+    static Prestamo findPrestamoById(String id) {
+        for (Prestamo p : prestamos) {
+            if (p.getIdPrestamo().equalsIgnoreCase(id)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    static void returnPrestamo() {
+        String id = readText("Loan id to return: ");
+        Prestamo p = findPrestamoById(id);
+        if (p == null) {
+            System.out.println("Loan not found.");
+            return;
+        }
+        if (p.getEstado().equals("DEVUELTO")) {
+            System.out.println("This loan was already returned.");
+            return;
+        }
+        p.setEstado("DEVUELTO");
+        p.getLibro().setDisponible(true);
+        System.out.println("Return registered successfully.");
+    }
+
+    static void listActivePrestamos() {
+        boolean found = false;
+        for (Prestamo p : prestamos) {
+            if (p.getEstado().equals("ACTIVO")) {
+                System.out.println(p);
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println("No active loans.");
+        }
+    }
+}
