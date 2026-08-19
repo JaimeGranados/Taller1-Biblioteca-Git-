@@ -122,5 +122,16 @@ public class Main {
         l.setAutor(readText("New author: "));
         System.out.println("Book updated.");
     }
+
+        static void deleteLibro() {
+        String codigo = readText("Book code to delete: ");
+        Libro l = findLibroByCodigo(codigo);
+        if (l == null) {
+            System.out.println("Book not found.");
+            return;
+        }
+        libros.remove(l);
+        System.out.println("Book deleted.");
+    }
 }
 
