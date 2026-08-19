@@ -94,5 +94,20 @@ public class Main {
             System.out.println(l);
         }
     }
+
+        static Libro findLibroByCodigo(String codigo) {
+        for (Libro l : libros) {
+            if (l.getCodigo().equalsIgnoreCase(codigo)) {
+                return l;
+            }
+        }
+        return null;
+    }
+
+    static void searchLibro() {
+        String codigo = readText("Book code to search: ");
+        Libro l = findLibroByCodigo(codigo);
+        System.out.println(l != null ? l : "Book not found.");
+    }
 }
 
