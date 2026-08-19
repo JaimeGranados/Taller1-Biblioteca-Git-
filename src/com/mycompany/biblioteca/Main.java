@@ -7,6 +7,7 @@ public class Main {
 
     static ArrayList<Cliente> clientes = new ArrayList<>();
     static ArrayList<Libro> libros = new ArrayList<>();
+    static ArrayList<Prestamo> prestamos = new ArrayList<>();
     static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -132,6 +133,30 @@ public class Main {
         }
         libros.remove(l);
         System.out.println("Book deleted.");
+    }
+
+        static void createPrestamo() {
+        String idCliente = readText("Client id: ");
+        Cliente c = findClienteById(idCliente);
+        if (c == null) {
+            System.out.println("Client not found.");
+            return;
+        }
+        String codigoLibro = readText("Book code: ");
+        Libro l = findLibroByCodigo(codigoLibro);
+        if (l == null) {
+            System.out.println("Book not found.");
+            return;
+        }
+        if (!l.isDisponible()) {
+            System.out.println("Book is not available.");
+            return;
+        }
+        String idPrestamo = readText("Loan id: ");
+        Prestamo p = new Prestamo(idPrestamo, c, l);
+        prestamos.add(p);
+        l.setDisponible(false);
+        System.out.println("Loan registered successfully.");
     }
 }
 
