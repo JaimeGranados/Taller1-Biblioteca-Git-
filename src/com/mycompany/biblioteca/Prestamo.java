@@ -49,4 +49,29 @@ public class Prestamo {
                 + ", fecha=" + fecha
                 + ", estado=" + estado + "]";
     }
+
+        static Prestamo findPrestamoById(String id) {
+        for (Prestamo p : prestamos) {
+            if (p.getIdPrestamo().equalsIgnoreCase(id)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    static void returnPrestamo() {
+        String id = readText("Loan id to return: ");
+        Prestamo p = findPrestamoById(id);
+        if (p == null) {
+            System.out.println("Loan not found.");
+            return;
+        }
+        if (p.getEstado().equals("DEVUELTO")) {
+            System.out.println("This loan was already returned.");
+            return;
+        }
+        p.setEstado("DEVUELTO");
+        p.getLibro().setDisponible(true);
+        System.out.println("Return registered successfully.");
+    }
 }
