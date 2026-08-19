@@ -1,0 +1,6 @@
+﻿E:\JAIME\PROGRAMACION\UPC\P3\Taller_0\src\com\mycompany\biblioteca\Cliente.java
+E:\JAIME\PROGRAMACION\UPC\P3\Taller_0\src\com\mycompany\biblioteca\Main.java
+E:\JAIME\PROGRAMACION\UPC\P3\Taller_0\src\com\mycompany\biblioteca\Material.java
+E:\JAIME\PROGRAMACION\UPC\P3\Taller_0\src\com\mycompany\biblioteca\Persona.Java
+E:\JAIME\PROGRAMACION\UPC\P3\Taller_0\src\com\mycompany\biblioteca\Prestamo.java
+E:\JAIME\PROGRAMACION\UPC\P3\Taller_0\src\com\mycompany\biblioteca\target\Libro.java

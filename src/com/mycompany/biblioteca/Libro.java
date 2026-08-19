@@ -7,7 +7,7 @@ public class Libro extends Material {
     public Libro(String codigo, String titulo, String anioPublicacion, String autor) {
         super(codigo, titulo, anioPublicacion);
         this.autor = autor;
-        this.disponible = true; // available by default when created
+        this.disponible = true;
     }
 
     public String getAutor() {
