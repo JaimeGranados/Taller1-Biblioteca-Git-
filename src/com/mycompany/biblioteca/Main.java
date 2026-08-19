@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class Main {
 
     static ArrayList<Cliente> clientes = new ArrayList<>();
+    static ArrayList<Libro> libros = new ArrayList<>();
     static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -73,6 +74,15 @@ public class Main {
         }
         clientes.remove(c);
         System.out.println("Client deleted.");
+    }
+
+        static void createLibro() {
+        String codigo = readText("Book code: ");
+        String titulo = readText("Title: ");
+        String anio = readText("Publication year: ");
+        String autor = readText("Author: ");
+        libros.add(new Libro(codigo, titulo, anio, autor));
+        System.out.println("Book created successfully.");
     }
 }
 
