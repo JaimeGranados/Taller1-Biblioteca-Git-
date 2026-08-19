@@ -63,5 +63,16 @@ public class Main {
         c.setEmail(readText("New email: "));
         System.out.println("Client updated.");
     }
+
+        static void deleteCliente() {
+        String id = readText("Client id to delete: ");
+        Cliente c = findClienteById(id);
+        if (c == null) {
+            System.out.println("Client not found.");
+            return;
+        }
+        clientes.remove(c);
+        System.out.println("Client deleted.");
+    }
 }
 
